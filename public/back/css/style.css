@@ -1,0 +1,26 @@
+.user-panel.active {
+    background: #19365f;
+}
+.user-panel>.image>img.new {
+    border: 3px solid #f39c12;
+}
+.small-sub {
+    font-weight: normal;
+}
+td.normal {
+	 line-height: 1.2em !important;
+}
+.table-top td {
+	vertical-align: top  !important;
+}
+.timeline:before {
+    width: 0px;
+    background: none; 
+    left: 31px;
+    margin: 0;
+    border-radius: 2px;
+}
+
+.timeline>li>.timeline-item {
+    margin-left: 25px;
+}
