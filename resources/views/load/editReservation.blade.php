@@ -7,10 +7,10 @@
         <div class="form-group">
             <label for="">Start Date</label>
             <div class="row" style="margin: 0px;">
-                <div class="col-xs-8" style="padding: 0px;">
+                <div class="col-xs-7" style="padding: 0px;">
                     <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($info->date_start)->format('Y-m-d') }}" name="date_start" required />
                 </div>
-                <div class="col-xs-4" style="padding: 0px;">
+                <div class="col-xs-5" style="padding: 0px;">
                     <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($info->time_start)->format('H:i') }}" name="time_start" required />
                 </div>
             </div>
@@ -18,10 +18,10 @@
         <div class="form-group">
             <label for="">End Date</label>
             <div class="row no-margin">
-                <div class="col-xs-8 no-padding">
+                <div class="col-xs-7 no-padding">
                     <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($info->date_end)->format('Y-m-d') }}" name="date_end" required />
                 </div>
-                <div class="col-xs-4 no-padding">
+                <div class="col-xs-5 no-padding">
                     <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($info->time_end)->format('H:i') }}" name="time_end" required />
                 </div>
             </div>

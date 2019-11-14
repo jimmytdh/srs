@@ -30,43 +30,17 @@ class ReservationController extends Controller
             $date_end = Carbon::parse($date)->endOfDay();
         }
 
-//        $included = Reservation::select('item_id')
-//                        ->where(function($q) use($date_start,$date_end){
-//                            $q->whereBetween('date_start',[$date_start,$date_end]);
-//                        })
-//                        ->orwhere(function($q) use($date_start,$date_end){
-//                            $q->whereBetween('date_end',[$date_start,$date_end]);
-//                        })
-//                        ->get();
-
-        $included = Reservation::select('item_id')
-                        ->whereRaw('"'.$date_start.'" between `date_start` and `date_end`')
-                        ->get();
-
-//        $reserved = Reservation::orderBy('code','asc')
-//            ->where(function($q) use($date_start,$date_end){
-//                $q->whereBetween('date_start',[$date_start,$date_end]);
-//            })
-//            ->orwhere(function($q) use($date_start,$date_end){
-//                $q->whereBetween('date_end',[$date_start,$date_end]);
-//            })
-//            ->groupBy('code')
-//            ->get();
-
         $reserved = DB::table('reservations')
                         ->whereRaw('"'.$date_start.'" between `date_start` and `date_end`')
                         ->groupBy('code')
                         ->get();
 
-        $available = Item::whereNotIn('id',$included)
-                        ->orderBy('name','asc')
-                        ->get();
 
         return view('page.reservation',[
             'menu' => 'reservation',
             'title' => 'Reservation',
             'reserved' => $reserved,
-            'available' => $available,
+            'available' => array(),
             'date' => $date
         ]);
     }
@@ -109,8 +83,8 @@ class ReservationController extends Controller
             $data = array(
                 'code' => $code,
                 'item_id' => $id,
-                'date_start' => Carbon::parse("$req->date_start"),
-                'date_end' => Carbon::parse("$req->date_end"),
+                'date_start' => Carbon::parse("$req->date_start $req->time_start"),
+                'date_end' => Carbon::parse("$req->date_end $req->time_end"),
                 'time_start' => Carbon::parse("$req->time_start"),
                 'time_end' => Carbon::parse("$req->time_end"),
                 'user' => $req->user,
@@ -248,5 +222,57 @@ class ReservationController extends Controller
             'msg' => "Item(s) successfully borrowed!",
             'status' => 'success'
         ]);
+    }
+
+    public function checkAvailable($date,$time_start, $time_end)
+    {
+        $output = '
+            <div class="alert bg-danger">
+                No available items on selected date!             
+            </div>
+        ';
+
+        $time_start = Carbon::parse("$time_start")->format('H:i:s');
+        $time_end = Carbon::parse("$time_end")->format('H:i:s');
+        $i = Reservation::where('date_start',$date)
+                ->select('item_id')
+                //->where('time_start','>=',$time_start)
+                //->where('time_end','<=',$time_end)
+                ->where(function ($q) use($time_start,$time_end){
+                    $q->whereBetween('time_start',[$time_start,$time_end]);
+                })
+                ->orwhere(function ($q) use($time_start,$time_end){
+                    $q->whereBetween('time_end',[$time_start,$time_end]);
+                })
+                ->get();
+
+        $items = Item::whereNotIn('id',$i)->orderBy('name','asc')->get();
+
+        if(count($items)==0)
+            return $output;
+
+        $output = '';
+
+        foreach($items as $row)
+        {
+            $output .= '
+                <div class="col-sm-6 no-padding">
+                    <label>
+                        <input type="checkbox" name="ids[]" value="'.$row->id.'" class="minimal"> '.$row->name.'
+                    </label>
+                </div>
+            ';
+        }
+
+        $output .= '
+            <div class="clearfix"></div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-sm btn-success btn-flat btn-block">
+                    <i class="fa fa-check"></i> Reserve
+                </button>
+            </div>
+        ';
+
+        return $output;
     }
 }

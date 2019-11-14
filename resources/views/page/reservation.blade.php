@@ -169,6 +169,7 @@
     <script src="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
     <script>
         $(function () {
+            loadAvailable();
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass   : 'iradio_minimal-blue'
@@ -179,7 +180,6 @@
                 checkboxClass: 'icheckbox_flat-blue',
                 radioClass: 'iradio_flat-blue'
             });
-
 
             $("#btnDelete").click(function () {
                 var ids = $(".item_id:checked").map(function(){
@@ -212,6 +212,7 @@
                 },1300);
 
             });
+
             $("a[href='#getItem']").click(function () {
                 var code = $(this).data('code');
                 var cancelUrl = "{{ url('reservation/cancel') }}/"+code;
@@ -220,6 +221,10 @@
                 $('a[href="#cancel"]').attr('href',cancelUrl);
                 $('a[href="#borrow"]').attr('href',borrowUrl);
 
+            });
+
+            $('input[name="time_start"],input[name="time_end"]').change(function () {
+                loadAvailable();
             });
 
             $.ajax({
@@ -263,5 +268,17 @@
             });
 
         });
+
+        function loadAvailable() {
+            $('.availableItem').load("{{ url('loading') }}");
+            var date = $('input[name="date_end"]').val();
+            var time_start = $('input[name="time_start"]').val();
+            var time_end = $('input[name="time_end"]').val();
+            var url = "{{ url('reservation/available/') }}/"+date+"/"+time_start+"/"+time_end+"/";
+            setTimeout(function () {
+                $('.availableItem').load(url);
+            },500);
+            console.log(url);
+        }
     </script>
 @endsection
