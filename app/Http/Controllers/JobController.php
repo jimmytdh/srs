@@ -22,8 +22,7 @@ class JobController extends Controller
         $data = Job::select('*');
         if($keyword){
             $data = $data->where(function($q) use ($keyword){
-                $q->where('services','like',"%$keyword%")
-                    ->orwhere('request_office','like',"%$keyword%")
+                $q->where('request_office','like',"%$keyword%")
                     ->orwhere('remarks','like',"%$keyword%")
                     ->orwhere('service_by','like',"%$keyword%")
                     ->orwhere('request_by','like',"%$keyword%");
