@@ -37,12 +37,12 @@
                     <li class="{{ ($menu=='accept') ? 'active':'' }}"><a href="#acceptDocument" data-toggle="modal"><i class="fa fa-calendar-plus-o"></i> Reserved</a></li>
                 </ul>
             </li>
-            <li class="{{ ($menu=='jobrequest') ? 'active':'' }}">
-                <a href="{{ url('/') }}/">
+            <li class="{{ ($menu=='job') ? 'active':'' }}">
+                <a href="{{ url('/job') }}/">
                     <i class="fa fa-fax"></i> <span>Job Request</span>
                 </a>
             </li>
-            <li class="{{ ($menu=='sysrequest') ? 'active':'' }}">
+            <li class="{{ ($menu=='system') ? 'active':'' }}">
                 <a href="{{ url('/') }}/">
                     <i class="fa fa-chrome"></i> <span>System Request</span>
                 </a>
@@ -64,6 +64,7 @@
                     @endif
                 </ul>
             </li>
+            <div class="hidden">
             @if($user->level=='admin')
                 <li class="header">SYSTEM PARAMETERS</li>
                 <li class="{{ ($menu=='users') ? 'active':'' }}">
@@ -87,6 +88,7 @@
                     </a>
                 </li>
             @endif
+            </div>
             <li class="header">ACCOUNT SETTINGS</li>
             <li class="{{ ($menu=='profile') ? 'active':'' }}">
                 <a href="{{ url('/user/profile') }}">

@@ -33,8 +33,6 @@ use App\Monitoring;
                     <div class="box-body no-padding">
                         <div class="mailbox-controls">
                             <!-- Check all button -->
-                            <button type="button" class="btn btn-primary btn-sm checkbox-toggle"><i class="fa fa-square-o"></i> Select All
-                            </button>
                             <div class="btn-group">
                                 <button type="button" data-toggle="modal" data-target="#addItem" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Item</button>
                                 <button data-target="#borrowItem" data-toggle="modal" type="button" class="btn btn-info btn-sm"><i class="fa fa-share"></i> Borrow</button>

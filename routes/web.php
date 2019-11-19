@@ -107,7 +107,18 @@ Route::get('/reservation/available/{date}/{time_start}/{time_end}/{code}','Reser
 
 //END RESERVATION SECTION
 
+//START JOB SECTION
 
+Route::get('/job','JobController@index');
+Route::post('/job/save','JobController@save');
+Route::post('/job/delete','JobController@delete');
+Route::get('/job/edit/{id}','JobController@edit');
+Route::post('/job/update/{id}','JobController@update');
+Route::post('/job/search','JobController@search');
+
+Route::get('/job/services/{id}','JobController@editServices');
+Route::post('/job/services/{id}','JobController@updateServices');
+//END JOB SECTION
 
 //PARAM
 Route::get('/param/clear/{session}','ParamController@clearSession');

@@ -42,7 +42,6 @@ class ItemController extends Controller
         ]);
     }
 
-
     public function search(Request $req)
     {
         Session::put('searchItem',$req->keyword);
