@@ -103,7 +103,7 @@ Route::get('/reservation/change/date/{code}','ReservationController@changeDate')
 Route::get('/reservation/cancel/{code}','ReservationController@cancel');
 Route::get('/reservation/borrow/{code}','ReservationController@borrow');
 
-Route::get('/reservation/available/{date}/{time_start}/{time_end}','ReservationController@checkAvailable');
+Route::get('/reservation/available/{date}/{time_start}/{time_end}/{code}','ReservationController@checkAvailable');
 
 //END RESERVATION SECTION
 

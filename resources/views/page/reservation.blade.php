@@ -5,9 +5,11 @@
     <link rel="stylesheet" href="{{ url('/back/plugins/iCheck/all.css') }}">
     <link rel="stylesheet" href="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.min.css">
     <link rel="stylesheet" href="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
+    <link rel="stylesheet" href="{{ url('/back') }}/bower_components/select2/dist/css/select2.css">
 @endsection
 
 @section('content')
+
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content">
@@ -20,6 +22,7 @@
                         <div class="text-danger text-bold">
                             Selected Date: {{ \Carbon\Carbon::parse($date)->format('F d, Y') }}
                         </div>
+
                         <!-- /.box-tools -->
                     </div>
                     <!-- /.box-header -->
@@ -165,9 +168,25 @@
 
 @section('js')
     <script src="{{ url('/back') }}/bower_components/moment/min/moment.min.js"></script>
+    <script src="{{ url('/back') }}/bower_components/select2/dist/js/select2.full.min.js"></script>
     <script src="{{ url('/back/plugins/iCheck/icheck.min.js') }}"></script>
     <script src="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.min.js"></script>
+
     <script>
+        $.fn.modal.Constructor.prototype.enforceFocus = function () {
+            var that = this;
+            $(document).on('focusin.modal', function (e) {
+
+                if ($(e.target).hasClass('select2')) {
+                    return true;
+                }
+            });
+        };
+        $(document).ready(function() {
+            $('.select2').select2({
+                multiple:true
+            });
+        });
         $(function () {
             loadAvailable();
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
@@ -213,6 +232,7 @@
 
             });
 
+
             $("a[href='#getItem']").click(function () {
                 var code = $(this).data('code');
                 var cancelUrl = "{{ url('reservation/cancel') }}/"+code;
@@ -226,6 +246,14 @@
             $('input[name="time_start"],input[name="time_end"]').change(function () {
                 loadAvailable();
             });
+
+            $(document).on('change','.edit_time_start', function () {
+                loadEditAvailble();
+            });
+            $(document).on('change','.edit_time_end', function () {
+                loadEditAvailble();
+            });
+
 
             $.ajax({
                 url: "{{ url('/reservation/calendar') }}",
@@ -274,11 +302,24 @@
             var date = $('input[name="date_end"]').val();
             var time_start = $('input[name="time_start"]').val();
             var time_end = $('input[name="time_end"]').val();
-            var url = "{{ url('reservation/available/') }}/"+date+"/"+time_start+"/"+time_end+"/";
+            var url = "{{ url('reservation/available/') }}/"+date+"/"+time_start+"/"+time_end+"/new/";
             setTimeout(function () {
                 $('.availableItem').load(url);
             },500);
+        }
+
+        function loadEditAvailble()
+        {
+            var code = $(document).find('.code').val();
+            $(document).find('.editAvailableItem').load("{{ url('loading') }}");
+            var date = $(document).find('.edit_date_end').val();
+            var time_start = $(document).find('.edit_time_start').val();
+            var time_end = $(document).find('.edit_time_end').val();
+            var url = "{{ url('reservation/available/') }}/"+date+"/"+time_start+"/"+time_end+"/"+code;
             console.log(url);
+            setTimeout(function () {
+                $(document).find('.editAvailableItem').load(url);
+            },500);
         }
     </script>
 @endsection

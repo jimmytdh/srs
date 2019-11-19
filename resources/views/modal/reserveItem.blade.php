@@ -1,4 +1,4 @@
-<div class="modal fade" tabindex="-1" role="dialog" id="reserveItem" style="z-index:999991;">
+<div class="modal fade" role="dialog" id="reserveItem" style="z-index:999991;">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="padding: 5px 20px;">
@@ -40,36 +40,26 @@
                         <input type="text" class="form-control" name="title" placeholder="Event Title" required />
                     </div>
                     <div class="form-group">
-                        <textarea name="description" rows="3" style="resize: none;" class="form-control" placeholder="Description e.g. location" required></textarea>
+                        <textarea name="description" rows="3" style="resize: none;" class="form-control" placeholder="Description/Location" required></textarea>
                     </div>
                     <div class="form-group">
-                        @if(count($available)>0)
-                        <label for="">Items Available:</label>
+                        <label for="">Items:</label>
                         <br>
-                        @foreach($available as $row)
-                            <div class="col-sm-6 no-padding">
+                        @foreach($items as $row)
+                            <div class="col-sm-12 no-padding">
                                 <label>
                                     <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="minimal"> {{ $row->name }}
                                 </label>
                             </div>
                         @endforeach
-                        @else
-                        <div class="availableItem">
-                            <div class="alert bg-danger">
-                                No available items on selected date!
-                            </div>
-                        </div>
-                        @endif
                     </div>
                 </div>
-                @if(count($available)>0)
                 <div class="clearfix"></div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-sm btn-success btn-flat btn-block">
                         <i class="fa fa-check"></i> Reserve
                     </button>
                 </div>
-                @endif
             </form>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

@@ -2,7 +2,7 @@
     {{ csrf_field() }}
     <div class="modal-body">
         <div class="form-group">
-            <input type="hidden" class="form-control" value="" name="ids" id="inputReservedItems"  />
+            <input type="hidden" class="form-control code" value="{{ $code }}" />
         </div>
         <div class="form-group">
             <label for="">Start Date</label>
@@ -11,7 +11,7 @@
                     <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($info->date_start)->format('Y-m-d') }}" name="date_start" required />
                 </div>
                 <div class="col-xs-5" style="padding: 0px;">
-                    <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($info->time_start)->format('H:i') }}" name="time_start" required />
+                    <input type="time" class="form-control edit_time_start" value="{{ \Carbon\Carbon::parse($info->time_start)->format('H:i') }}" name="time_start" required />
                 </div>
             </div>
         </div>
@@ -19,10 +19,10 @@
             <label for="">End Date</label>
             <div class="row no-margin">
                 <div class="col-xs-7 no-padding">
-                    <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($info->date_end)->format('Y-m-d') }}" name="date_end" required />
+                    <input type="date" class="form-control edit_date_end" value="{{ \Carbon\Carbon::parse($info->date_end)->format('Y-m-d') }}" name="date_end" required />
                 </div>
                 <div class="col-xs-5 no-padding">
-                    <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($info->time_end)->format('H:i') }}" name="time_end" required />
+                    <input type="time" class="form-control edit_time_end" value="{{ \Carbon\Carbon::parse($info->time_end)->format('H:i') }}" name="time_end" required />
                 </div>
             </div>
         </div>
@@ -33,16 +33,18 @@
             <input type="text" class="form-control" name="title" value="{{ $info->title }}" placeholder="Event Title" required />
         </div>
         <div class="form-group">
-            <textarea name="description" rows="3" style="resize: none;" class="form-control" placeholder="Description e.g. location" required>{!! $info->description !!}</textarea>
+            <textarea name="description" rows="3" style="resize: none;" class="form-control" placeholder="Description/Location" required>{!! $info->description !!}</textarea>
         </div>
+        <div class="editAvailableItem">
         <div class="form-group">
             @if(count($items)>0)
                 <label for="">Items Borrowed:</label>
                 <br>
                 @foreach($items as $row)
-                    <div class="col-sm-6 no-padding">
+                    <div class="col-sm-12 no-padding">
                         <label>
-                            <input type="checkbox" checked name="ids[]" value="{{ $row->id }}" class="minimal"> {{ $row->name }}
+                            <?php $check = \App\Http\Controllers\ReservationController::isItemByCode($row->id,$code); ?>
+                            <input type="checkbox" @if($check) checked @endif name="ids[]" value="{{ $row->id }}" class="minimal"> {{ $row->name }}
                         </label>
                     </div>
                 @endforeach
@@ -53,23 +55,6 @@
             @endif
         </div>
         <div class="clearfix"></div>
-        <div class="form-group">
-            @if(count($available)>0)
-                <label for="">Items Available:</label>
-                <br>
-                @foreach($available as $row)
-                    <div class="col-sm-6 no-padding">
-                        <label>
-                            <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="minimal"> {{ $row->name }}
-                        </label>
-                    </div>
-                @endforeach
-            @else
-                <div class="alert bg-danger">
-                    No available items on selected date!
-                </div>
-            @endif
-        </div>
     </div>
 
     <div class="clearfix"></div>

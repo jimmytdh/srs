@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{{ url('/back/bower_components') }}/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{ url('/back/bower_components') }}/Ionicons/css/ionicons.min.css">
+    @yield('css')
     <!-- Theme style -->
     <link rel="stylesheet" href="{{ url('/back') }}/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -22,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('/back/css/style.css') }}">
 
     <link rel="icon" type="image/png" href="{{ url('img/logo-white.png') }}">
-@yield('css')
+
 <!-- Google Font -->
     {{--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">--}}
     <style>

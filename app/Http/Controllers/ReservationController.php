@@ -34,13 +34,14 @@ class ReservationController extends Controller
                         ->whereRaw('"'.$date_start.'" between `date_start` and `date_end`')
                         ->groupBy('code')
                         ->get();
+        $items = Item::orderBy('name','asc')->get();
 
 
         return view('page.reservation',[
             'menu' => 'reservation',
             'title' => 'Reservation',
             'reserved' => $reserved,
-            'available' => array(),
+            'items' => $items,
             'date' => $date
         ]);
     }
@@ -71,7 +72,6 @@ class ReservationController extends Controller
                 'status' => 'warning'
             ]);
         }
-
         if($code){
             Reservation::where('code',$code)->delete();
         }else{
@@ -104,39 +104,17 @@ class ReservationController extends Controller
     public function edit($code)
     {
         $info = Reservation::where('code',$code)->first();
-        $items = Reservation::where('code',$code)
-                    ->leftJoin('items','items.id','=','reservations.item_id')
-                    ->orderBy('items.name','asc')
-                    ->get();
+        $items = Item::orderBy('name','asc')
+            ->get();
 
         $date = Session::get('date_reservation');
-        if($date)
-        {
-            $date_start = Carbon::parse($date)->startOfDay();
-            $date_end = Carbon::parse($date)->endOfDay();
-        }else{
-            $date = Carbon::today();
-            $date_start = Carbon::parse($date)->startOfDay();
-            $date_end = Carbon::parse($date)->endOfDay();
-        }
 
-        $included = Reservation::select('item_id')
-            ->where(function($q) use($date_start,$date_end){
-                $q->whereBetween('date_start',[$date_start,$date_end]);
-            })
-            ->orwhere(function($q) use($date_start,$date_end){
-                $q->whereBetween('date_end',[$date_start,$date_end]);
-            })
-            ->get();
-        $available = Item::whereNotIn('id',$included)
-            ->orderBy('name','asc')
-            ->get();
 
         return view('load.editReservation',[
             'code' => $code,
             'info' => $info,
             'items' => $items,
-            'available' => $available
+            'code' => $code
         ]);
     }
 
@@ -160,7 +138,7 @@ class ReservationController extends Controller
         {
             $result[] = array(
                 'title' => $row->title,
-                'description' => "Borrower: $row->user<br>Description: $row->description<br>Items: ".self::getItems($row->code)->pluck('name')->implode(', '),
+                'description' => "Borrower: $row->user<br>Description/Location: $row->description<br>Items: ".self::getItems($row->code)->pluck('name')->implode(', '),
                 'start' => Carbon::parse($row->date_start)->format('Y-m-d')." ".Carbon::parse($row->time_start)->format('H:i:s'),
                 'end' => Carbon::parse($row->date_end)->format('Y-m-d')." ".Carbon::parse($row->time_end)->format('H:i:s'),
                 'allDay' => 'true',
@@ -224,7 +202,7 @@ class ReservationController extends Controller
         ]);
     }
 
-    public function checkAvailable($date,$time_start, $time_end)
+    public function checkAvailable($date,$time_start, $time_end, $code)
     {
         $output = '
             <div class="alert bg-danger">
@@ -243,15 +221,20 @@ class ReservationController extends Controller
                 })
                 ->where(function ($q) use($time_start,$time_end){
                     $q->whereBetween('time_end',[$time_start,$time_end]);
-                })
-                ->get();
+                });
+        if($code!='new')
+        {
+            $i = $i->where('code',$code);
+        }
+
+        $i = $i->get();
 
         $items = Item::whereNotIn('id',$i)->orderBy('name','asc')->get();
 
         if(count($items)==0)
             return $output;
 
-        $output = '';
+        $output = '<label>Item(s) Available</label><br>';
 
         foreach($items as $row)
         {
@@ -264,15 +247,25 @@ class ReservationController extends Controller
             ';
         }
 
-        $output .= '
-            <div class="clearfix"></div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-sm btn-success btn-flat btn-block">
-                    <i class="fa fa-check"></i> Reserve
-                </button>
-            </div>
-        ';
+        if($code == 'new') {
+                $output .= '
+                <div class="clearfix"></div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-sm btn-success btn-flat btn-block">
+                        <i class="fa fa-check"></i> Reserve/Update
+                    </button>
+                </div>
+            ';
+        }
 
         return $output;
+    }
+
+    static function isItemByCode($id,$code)
+    {
+        $check = Reservation::where('code',$code)->where('item_id',$id)->first();
+        if($check)
+            return true;
+        return false;
     }
 }
