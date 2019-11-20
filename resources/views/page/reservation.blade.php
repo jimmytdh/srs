@@ -292,6 +292,8 @@
                             end: "{{ date('Y') }}-12-31"
                         }
                     });
+
+                    $('#calendar').fullCalendar('gotoDate', "{{ \Carbon\Carbon::parse($date)->format('Y-m-d') }}");
                 }
             });
 
