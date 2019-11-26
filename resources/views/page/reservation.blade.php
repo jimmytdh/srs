@@ -6,6 +6,10 @@
     <link rel="stylesheet" href="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.min.css">
     <link rel="stylesheet" href="{{ url('/back') }}/bower_components/fullcalendar/dist/fullcalendar.print.min.css" media="print">
     <link rel="stylesheet" href="{{ url('/back') }}/bower_components/select2/dist/css/select2.css">
+
+    <style>
+        #calendar td { cursor: pointer; }
+    </style>
 @endsection
 
 @section('content')
@@ -16,6 +20,9 @@
             <div class="col-md-6">
                 <div class="box box-primary">
                     <div class="box-header with-border">
+                        <div class="pull-right">
+                            <button type="button" data-toggle="modal" data-target="#reserveItem" id="btnReserve" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Reserve</button>
+                        </div>
                         <h3 class="box-title">Reservation</h3>
 
                         <br>
@@ -23,11 +30,12 @@
                             Selected Date: {{ \Carbon\Carbon::parse($date)->format('F d, Y') }}
                         </div>
 
+
                         <!-- /.box-tools -->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
-                        <form action="{{ url('reservation/search') }}" method="post" class=" form-inline">
+                        <form action="{{ url('reservation/search') }}" method="post" class=" form-inline hidden">
                             {{ csrf_field() }}
                             <div class="mailbox-controls">
                                 <!-- Check all button -->
@@ -254,7 +262,6 @@
                 loadEditAvailble();
             });
 
-
             $.ajax({
                 url: "{{ url('/reservation/calendar') }}",
                 type: "GET",
@@ -290,6 +297,10 @@
                         validRange: {
                             start: "{{ date('Y') }}-01-01",
                             end: "{{ date('Y') }}-12-31"
+                        },
+                        dayClick: function(date, jsEvent, view) {
+                            var url = "{{ url('/reservation/change/date/') }}/"+ date.format();
+                            window.location = url;
                         }
                     });
 

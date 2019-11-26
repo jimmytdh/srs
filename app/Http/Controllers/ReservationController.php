@@ -52,14 +52,11 @@ class ReservationController extends Controller
         return redirect()->back();
     }
 
-    public function changeDate($code)
+    public function changeDate($date)
     {
-        $r = Reservation::where('code',$code)->first()->date_start;
-        $date = Carbon::parse($r)->format('Y-m-d');
         Session::put('date_reservation',$date);
-        return redirect()->back();
+        return redirect('/reservation');
     }
-
 
     public function save(Request $req, $code = false)
     {
@@ -142,7 +139,6 @@ class ReservationController extends Controller
                 'start' => Carbon::parse($row->date_start)->format('Y-m-d')." ".Carbon::parse($row->time_start)->format('H:i:s'),
                 'end' => Carbon::parse($row->date_end)->format('Y-m-d')." ".Carbon::parse($row->time_end)->format('H:i:s'),
                 'allDay' => 'true',
-                'url' => url('reservation/change/date/'.$row->code),
                 'backgroundColor' => '#00a65a',
                 'borderColor' => '#00a65a'
             );
