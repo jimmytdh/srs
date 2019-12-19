@@ -124,3 +124,4 @@ Route::post('/job/services/{id}','JobController@updateServices');
 Route::get('/param/clear/{session}','ParamController@clearSession');
 Route::get('/loading','ParamController@loading');
 
+Route::get('/manual/reserve','ParamController@manual');

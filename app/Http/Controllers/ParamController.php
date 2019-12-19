@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Section;
 use App\Tracking;
 use App\TrackingMaster;
+use App\Reservation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -110,5 +111,41 @@ class ParamController extends Controller
     public function loading()
     {
         return view('page.loading');
+    }
+
+    public function manual()
+    {
+        $fromDate = '2020-01-01';
+        $toDate = '2020-12-31';
+
+        $startDate = Carbon::parse($fromDate)->next(Carbon::FRIDAY); // Get the first friday.
+        $endDate = Carbon::parse($toDate);
+
+        $items = [4,3,2];
+
+        for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+            $d = $date->format('Y-m-d');
+            $code = $date->format('ymdHis');
+            foreach($items as $id)
+            {
+                 $data = array(
+                    'code' => $code,
+                    'item_id' => $id,
+                    'date_start' => Carbon::parse("$d 13:00:00"),
+                    'date_end' => Carbon::parse("$d 17:00:00"),
+                    'time_start' => Carbon::parse("13:00:00"),
+                    'time_end' => Carbon::parse("17:00:00"),
+                    'user' => 'Celine',
+                    'title' => 'Nursing Service Meetings/Activities',
+                    'description' => '4th Floor Conference Room',
+                    'status' => 'Reserved'
+                );
+                Reservation::create($data);
+            }
+        }
+   
+
+        
+        
     }
 }

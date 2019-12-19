@@ -1,3 +1,7 @@
+<?php
+    $nextYear = date('Y')+1;
+?>
+
 @extends('app')
 
 @section('css')
@@ -296,7 +300,7 @@
                         },
                         validRange: {
                             start: "{{ date('Y') }}-01-01",
-                            end: "{{ date('Y') }}-12-31"
+                            end: "{{ $nextYear }}-12-31"
                         },
                         dayClick: function(date, jsEvent, view) {
                             var url = "{{ url('/reservation/change/date/') }}/"+ date.format();
