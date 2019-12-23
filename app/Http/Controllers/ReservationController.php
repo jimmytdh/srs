@@ -126,7 +126,7 @@ class ReservationController extends Controller
 
     public function calendar()
     {
-        $reserved = Reservation::whereBetween('date_start',[Carbon::now()->startOfYear(),Carbon::now()->endOfYear()])
+        $reserved = Reservation::whereBetween('date_start',[Carbon::now()->startOfYear(),Carbon::now()->addYear(1)->endOfYear()])
             ->groupBy('code')
             ->get();
 
