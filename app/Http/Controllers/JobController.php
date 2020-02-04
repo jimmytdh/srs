@@ -62,7 +62,7 @@ class JobController extends Controller
         $last_id = $job->id;
         Job::find($last_id)
             ->update([
-               'form_no' =>  $date->format('m').'-'.str_pad($last_id,3,0,STR_PAD_LEFT)
+               'form_no' =>  $date->format('ym').'-'.str_pad($last_id,3,0,STR_PAD_LEFT)
             ]);
         $ids = $req->ids;
         if($ids)
