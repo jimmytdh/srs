@@ -19,10 +19,10 @@
             <label for="">Date Acted:</label>
             <div class="row" style="margin: 0px;">
                 <div class="col-xs-7" style="padding: 0px;">
-                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" name="acted_date" required />
+                    <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') }}" name="acted_date" required />
                 </div>
                 <div class="col-xs-5" style="padding: 0px;">
-                    <input type="time" class="form-control" value="{{ date('H:i') }}" name="acted_time" required />
+                    <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($data->request_date)->format('H:i') }}" name="acted_time" required />
                 </div>
             </div>
         </div>
@@ -30,10 +30,10 @@
             <label for="">Date Completed:</label>
             <div class="row" style="margin: 0px;">
                 <div class="col-xs-7" style="padding: 0px;">
-                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" name="completed_date" required />
+                    <input type="date" class="form-control" value="{{ \Carbon\Carbon::parse($data->request_date)->format('Y-m-d') }}" name="completed_date" required />
                 </div>
                 <div class="col-xs-5" style="padding: 0px;">
-                    <input type="time" class="form-control" value="{{ date('H:i') }}" name="completed_time" required />
+                    <input type="time" class="form-control" value="{{ \Carbon\Carbon::parse($data->request_date)->format('H:i') }}" name="completed_time" required />
                 </div>
             </div>
         </div>
