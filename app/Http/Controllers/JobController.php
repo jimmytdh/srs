@@ -60,9 +60,10 @@ class JobController extends Controller
         );
         $job = Job::create($data);
         $last_id = $job->id;
+        $code = self::generateFormNo($date);
         Job::find($last_id)
             ->update([
-               'form_no' =>  $date->format('ym').'-'.str_pad($last_id,3,0,STR_PAD_LEFT)
+               'form_no' =>  $date->format('ym').'-'.str_pad($code,3,0,STR_PAD_LEFT)
             ]);
         $ids = $req->ids;
         if($ids)
@@ -82,6 +83,15 @@ class JobController extends Controller
             'title' => 'Added',
             'msg' => $req->requested_by.' request successfully added!'
         ]);
+    }
+
+    public function generateFormNo($date)
+    {
+        $start = Carbon::parse($date)->startOfMonth();
+        $end = Carbon::parse($date)->endOfMonth();
+
+        $count = Job::whereBetween('request_date',[$start,$end])->count();
+        return $count++;
     }
 
     public function edit($id)
