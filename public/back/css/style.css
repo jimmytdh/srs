@@ -24,3 +24,10 @@ td.normal {
 .timeline>li>.timeline-item {
     margin-left: 25px;
 }
+
+.editable {
+    text-decoration: none;
+    border-bottom: dashed 1px #0357cc !important;
+    color: #0357cc;
+    font-weight: bold;
+}
