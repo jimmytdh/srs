@@ -24,6 +24,7 @@ class JobController extends Controller
             $data = $data->where(function($q) use ($keyword){
                 $q->where('request_office','like',"%$keyword%")
                     ->orwhere('remarks','like',"%$keyword%")
+                    ->orwhere('form_no','like',"%$keyword%")
                     ->orwhere('service_by','like',"%$keyword%")
                     ->orwhere('request_by','like',"%$keyword%");
             });

@@ -42,6 +42,11 @@
                     <i class="fa fa-fax"></i> <span>Job Request</span>
                 </a>
             </li>
+            <li class="{{ ($menu=='ip') ? 'active':'' }}">
+                <a href="{{ url('/ip') }}/">
+                    <i class="fa fa-code-fork"></i> <span>IP Address</span>
+                </a>
+            </li>
             <li class="{{ ($menu=='system') ? 'active':'' }}">
                 <a href="{{ url('/') }}/">
                     <i class="fa fa-chrome"></i> <span>System Request</span>

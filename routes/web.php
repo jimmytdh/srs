@@ -120,6 +120,16 @@ Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');
 //END JOB SECTION
 
+//START JOB SECTION
+
+Route::get('/ip','IPController@index');
+Route::post('/ip/update/{type}/{id}','IPController@update');
+Route::post('/ip/search/{type}','IPController@search');
+
+Route::get('/job/services/{id}','JobController@editServices');
+Route::post('/job/services/{id}','JobController@updateServices');
+//END JOB SECTION
+
 //PARAM
 Route::get('/param/clear/{session}','ParamController@clearSession');
 Route::get('/loading','ParamController@loading');
