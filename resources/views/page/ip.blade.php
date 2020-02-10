@@ -81,7 +81,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                @for($i=2; $i<255; $i++)
+                                @for($i=4; $i<255; $i++)
                                     <?php $user = \App\Http\Controllers\IPController::getName('homis',$i) ?>
                                     <tr class="search_item2 @if(session('success')=="homis$i") bg-yellow @endif">
                                         <td><a href="#update_ip" data-ip="{{ $i }}" data-type="homis" data-toggle="modal" class="editable">
