@@ -135,3 +135,4 @@ Route::get('/param/clear/{session}','ParamController@clearSession');
 Route::get('/loading','ParamController@loading');
 
 Route::get('/manual/lastFriday','ParamController@lastFriday');
+Route::get('/manual/thirdWed','ParamController@thirdWed');

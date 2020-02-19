@@ -151,6 +151,36 @@ class ParamController extends Controller
         }
 
     }
+
+    public function thirdWed()
+    {
+        $items = [4,3,2,5,1];
+
+        for($i=3; $i<=12; $i++){
+            $day = str_pad($i,2,0,STR_PAD_LEFT);
+            $start = "2020-$day-01";
+
+            $wed = Carbon::parse($start)->nthOfMonth(3, Carbon::WEDNESDAY);
+            $code = Carbon::parse($start)->format('ymd')."093000";
+            foreach($items as $id)
+            {
+                $data = array(
+                    'code' => $code,
+                    'item_id' => $id,
+                    'date_start' => Carbon::parse("$wed")->format("Y-m-d 09:30:00"),
+                    'date_end' => Carbon::parse("$wed")->format("Y-m-d 12:00:00"),
+                    'time_start' => Carbon::parse("09:30:00"),
+                    'time_end' => Carbon::parse("12:00:00"),
+                    'user' => 'Celine AC',
+                    'title' => "HCATS Meeting",
+                    'description' => '4th Floor Conference Room',
+                    'status' => 'Reserved'
+                );
+                Reservation::create($data);
+            }
+        }
+
+    }
     public function manual()
     {
         $fromDate = '2020-01-01';
