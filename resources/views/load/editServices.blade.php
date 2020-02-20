@@ -8,7 +8,8 @@
             <textarea name="remarks" rows="3" style="resize: none;" class="form-control" placeholder="Remarks/Recommendation" required>{{ $data->remarks }}</textarea>
         </div>
         <div class="form-group">
-            <select name="service_by" id="" class="form-control">
+            <select name="service_by" id="" class="form-control" required>
+                <option value="">Select Personnel...</option>
                 <option>Wairley Von Cabiluna</option>
                 <option>Ian Aaron Manugas</option>
                 <option>Jimmy Lomocso</option>
