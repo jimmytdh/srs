@@ -18,20 +18,44 @@ class JobController extends Controller
 
     public function index()
     {
-        $keyword = \Illuminate\Support\Facades\Session::get('searchJob');
-        $data = Job::select('*');
+        $keyword = Session::get('searchJob');
+        $data = Job::select('jobs.*');
         if($keyword){
-            $data = $data->where(function($q) use ($keyword){
-                $q->where('request_office','like',"%$keyword%")
-                    ->orwhere('remarks','like',"%$keyword%")
-                    ->orwhere('form_no','like',"%$keyword%")
-                    ->orwhere('service_by','like',"%$keyword%")
-                    ->orwhere('request_by','like',"%$keyword%");
-            });
+            if($keyword['keyword']){
+                $s = $keyword['keyword'];
+                $data = $data->where(function($q) use ($s){
+                    $q->where('request_office','like',"%$s%")
+                        ->orwhere('remarks','like',"%$s%")
+                        ->orwhere('form_no','like',"%$s%")
+                        ->orwhere('request_by','like',"%$s%");
+                });
+            }
+
+            if($keyword['service_by']){
+                $data = $data->where('service_by',$keyword['service_by']);
+            }
+
+            if($keyword['date_range']){
+                $string = explode('-',$keyword['date_range']);
+
+                $date1 = date('Y-m-d',strtotime($string[0]));
+                $date2 = date('Y-m-d',strtotime($string[1]));
+
+                $start = Carbon::parse($date1)->startOfDay();
+                $end = Carbon::parse($date2)->endOfDay();
+
+                $data = $data->whereBetween('request_date',[$start,$end]);
+            }
+
+            if($keyword['service_id']){
+                $data = $data->leftJoin('job_services','job_services.job_id','=','jobs.id')
+                            ->where('service_id',$keyword['service_id']);
+            }
+
         }
 
         $data = $data
-            ->orderBy('id','desc')
+            ->orderBy('jobs.id','desc')
             ->paginate(30);
 
         $services = Services::get();
@@ -44,7 +68,13 @@ class JobController extends Controller
 
     public function search(Request $req)
     {
-        Session::put('searchJob',$req->keyword);
+        Session::put('searchJob',[
+            'keyword' => $req->keyword,
+            'service_by' => $req->service_by,
+            'date_range' => $req->date_range,
+            'service_id' => $req->service_id
+        ]);
+
         return redirect()->back();
     }
 

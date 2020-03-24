@@ -1,8 +1,20 @@
+<?php
+    $search = \Illuminate\Support\Facades\Session::get('searchJob');
+    if(!$search){
+        $search = array(
+            'keyword' => '',
+            'date_range' => '',
+            'service_by' => '',
+            'service_id' => ''
+        );
+    }
+?>
 @extends('app')
 
 @section('css')
     <link rel="stylesheet" href="{{ url('/back/plugins/iCheck/flat/blue.css') }}">
     <link rel="stylesheet" href="{{ url('/back/plugins/iCheck/all.css') }}">
+    <link rel="stylesheet" href="{{ url("/back/bower_components/bootstrap-daterangepicker/daterangepicker.css") }}">
     <style>
         th {
             vertical-align: middle !important;
@@ -26,13 +38,40 @@
                             {{ csrf_field() }}
                             <div class="mailbox-controls">
                                 <div class="form-group">
-                                    <button type="button" data-toggle="modal" data-target="#addItem" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> Add Job</button>
+                                    <input type="text" name="keyword" class="form-control input-sm" value="{{ $search['keyword'] }}" placeholder="Search Keyword...">
                                 </div>
                                 <div class="form-group">
-                                    <div class="has-feedback">
-                                        <input type="text" name="keyword" class="form-control input-sm" value="{{ Session::get('searchJob') }}" placeholder="Search Keyword...">
-                                        <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                                    <select name="service_by" class="form-control input-sm">
+                                        <option value="">Serviced by...</option>
+                                        <option @if($search['service_by']=='Wairley Von Cabiluna') selected @endif>Wairley Von Cabiluna</option>
+                                        <option @if($search['service_by']=='Ian Aaron Manugas') selected @endif>Ian Aaron Manugas</option>
+                                        <option @if($search['service_by']=='Jimmy Lomocso') selected @endif>Jimmy Lomocso</option>
+                                        <option @if($search['service_by']=='Ariel Nocos') selected @endif>Ariel Nocos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select name="service_id" class="form-control input-sm" id="">
+                                        <option value="">View All...</option>
+                                        @foreach($services as $r)
+                                            <option value="{{ $r->id }}" @if($r->id==$search['service_id']) selected @endif>{{ $r->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                        <input type="text" value="{{ $search['date_range'] }}" name="date_range" class="form-control input-sm pull-right" id="reservation">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <button class="btn btn-success btn-sm" type="submit">
+                                        <i class="fa fa-filter"></i> Filter
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" data-toggle="modal" data-target="#addItem" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Job</button>
                                 </div>
                                 <!-- /.pull-right -->
                             </div>
@@ -188,8 +227,12 @@
 
 @section('js')
     <script src="{{ url('/back/plugins/iCheck/icheck.min.js') }}"></script>
+    <script src="{{ url('/back/bower_components/moment/min/moment.min.js') }}"></script>
+    <script src="{{ url('/back/bower_components/bootstrap-daterangepicker/daterangepicker.js') }}"></script>
     <script>
         $(function () {
+            $('#reservation').daterangepicker();
+
             $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
                 checkboxClass: 'icheckbox_minimal-blue',
                 radioClass   : 'iradio_minimal-blue'
