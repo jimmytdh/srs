@@ -1,9 +1,11 @@
 <?php
     $search = \Illuminate\Support\Facades\Session::get('searchJob');
     if(!$search){
+        $start = \Carbon\Carbon::today()->startOfMonth()->format('Y-m-d');
+        $end = \Carbon\Carbon::today()->endOfMonth()->format('Y-m-d');
         $search = array(
             'keyword' => '',
-            'date_range' => '',
+            'date_range' => "$start-$end",
             'service_by' => '',
             'service_id' => ''
         );
