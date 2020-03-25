@@ -27,6 +27,7 @@ class JobController extends Controller
                     $q->where('request_office','like',"%$s%")
                         ->orwhere('remarks','like',"%$s%")
                         ->orwhere('form_no','like',"%$s%")
+                        ->orwhere('status','like',"%$s%")
                         ->orwhere('request_by','like',"%$s%");
                 });
             }
