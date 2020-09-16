@@ -115,6 +115,7 @@ Route::post('/job/delete','JobController@delete');
 Route::get('/job/edit/{id}','JobController@edit');
 Route::post('/job/update/{id}','JobController@update');
 Route::post('/job/search','JobController@search');
+Route::get('/job/print','JobController@printReport');
 
 Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');

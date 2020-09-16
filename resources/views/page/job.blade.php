@@ -75,6 +75,11 @@
                                 <div class="form-group">
                                     <button type="button" data-toggle="modal" data-target="#addItem" class="btn btn-info btn-sm"><i class="fa fa-plus"></i> Add Job</button>
                                 </div>
+                                <div class="form-group">
+                                    <a href="{{ url('/job/print') }}" class="btn btn-sm btn-default" target="_blank">
+                                        <i class="fa fa-print"></i> Print Report
+                                    </a>
+                                </div>
                                 <!-- /.pull-right -->
                             </div>
                         </form>

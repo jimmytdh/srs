@@ -67,6 +67,56 @@ class JobController extends Controller
         ]);
     }
 
+    public function printReport()
+    {
+        $keyword = Session::get('searchJob');
+        $data = Job::select('jobs.*');
+        if($keyword){
+            if($keyword['keyword']){
+                $s = $keyword['keyword'];
+                $data = $data->where(function($q) use ($s){
+                    $q->where('request_office','like',"%$s%")
+                        ->orwhere('remarks','like',"%$s%")
+                        ->orwhere('form_no','like',"%$s%")
+                        ->orwhere('status','like',"%$s%")
+                        ->orwhere('request_by','like',"%$s%");
+                });
+            }
+
+            if($keyword['service_by']){
+                $data = $data->where('service_by',$keyword['service_by']);
+            }
+
+            if($keyword['date_range']){
+                $string = explode('-',$keyword['date_range']);
+
+                $date1 = date('Y-m-d',strtotime($string[0]));
+                $date2 = date('Y-m-d',strtotime($string[1]));
+
+                $start = Carbon::parse($date1)->startOfDay();
+                $end = Carbon::parse($date2)->endOfDay();
+
+                $data = $data->whereBetween('request_date',[$start,$end]);
+            }
+
+            if($keyword['service_id']){
+                $data = $data->leftJoin('job_services','job_services.job_id','=','jobs.id')
+                    ->where('service_id',$keyword['service_id']);
+            }
+
+        }
+
+        $data = $data
+            ->orderBy('form_no','asc')
+            ->get();
+
+        return view('report.print',[
+            'data' => $data,
+            'start' => $start,
+            'end' => $end
+        ]);
+    }
+
     public function search(Request $req)
     {
         Session::put('searchJob',[
