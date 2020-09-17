@@ -7,12 +7,12 @@
         <td rowspan="2">Form No.</td>
         <td rowspan="2">Service</td>
         <td rowspan="2">Service By</td>
-        <td colspan="3">Requested</td>
+        <td rowspan="2">Requested By</td>
+        <td rowspan="2">Section</td>
         <td colspan="2">Acted Upon</td>
         <td colspan="2">Completed</td>
     </tr>
     <tr>
-        <td>By</td>
         <td>Date</td>
         <td>Time</td>
         <td>Date</td>
@@ -42,6 +42,9 @@
         </td>
         <td>
             {{ $row->request_by }}
+        </td>
+        <td>
+            {{ $row->request_office }}
         </td>
         <td>
             {{ \Carbon\Carbon::parse($row->request_date)->format('Y M d') }}
