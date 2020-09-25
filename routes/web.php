@@ -123,7 +123,7 @@ Route::post('/job/services/{id}','JobController@updateServices');
 
 //START JOB SECTION
 
-Route::get('/ip','IPController@index');
+Route::get('/ip/{range}','IPController@index');
 Route::post('/ip/update/{type}/{id}','IPController@update');
 Route::post('/ip/search/{type}','IPController@search');
 

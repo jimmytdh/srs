@@ -10,7 +10,8 @@ class IPAddress extends Model
         'type',
         'ip',
         'owner',
-        'section'
+        'section',
+        'mac'
     ];
     protected $table = 'ipaddresses';
 }

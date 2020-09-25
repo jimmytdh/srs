@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>TDH Service Request</title>
+    <title>CSMC:IHOMP Service Request</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -39,7 +39,7 @@
         <img src="{{ asset('img/logo-white.png') }}" width="80px" />
     </div>
     <div class="title">
-        <font class="region">Talisa District Hospital</font><br>
+        <font class="region">Cebu South Medical Center</font><br>
         <font class="sub">Service Request System</font>
     </div>
     <!-- /.login-logo -->

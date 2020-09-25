@@ -12,15 +12,20 @@ class IPController extends Controller
         $this->middleware('login');
     }
 
-    public function index()
+    public function index($range)
     {
         $keyword = \Illuminate\Support\Facades\Session::get('searchNetIP');
 
         $data = array();
 
+        $type = ($range==5) ? 'net' : 'homis';
+
         return view('page.ip',[
             'menu' => 'ip',
-            'data' => $data
+            'data' => $data,
+            'range' => $range,
+            'type' => $type,
+            'sub' => "$range.$range"
         ]);
     }
 
@@ -28,7 +33,8 @@ class IPController extends Controller
     {
         $data = array(
             'owner' => $req->owner,
-            'section' => $req->section
+            'section' => $req->section,
+            'mac' => $req->mac
         );
 
         $match = array(
@@ -47,7 +53,8 @@ class IPController extends Controller
         if(!$data){
             $data = array(
                 'owner' => '',
-                'section' => ''
+                'section' => '',
+                'mac' => ''
             );
             $data = (object)$data;
         }

@@ -14,10 +14,10 @@
     <div class="content-wrapper">
         <!-- Main content -->
         <section class="content">
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">IP Address <small class="text-danger">(192.168.5.* )</small></h3>
+                        <h3 class="box-title">IP Address <small class="text-danger">(192.168.{{ $range }}.* )</small></h3>
                         <div class="box-tools pull-right">
                             <div class="has-feedback">
                                 <input type="text" name="keyword" id="search" class="form-control input-sm" placeholder="Search IP/Owner/Area">
@@ -33,18 +33,20 @@
                                 <thead class="bg-gray-active">
                                     <tr>
                                         <th>IP</th>
+                                        <th>MAC Address</th>
                                         <th>Owner</th>
                                         <th>Section/Area</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @for($i=2; $i<255; $i++)
-                                    <?php $user = \App\Http\Controllers\IPController::getName('net',$i) ?>
-                                    <tr class="search_item @if(session('success')=="net$i") bg-yellow @endif">
-                                        <td><a href="#update_ip" data-ip="{{ $i }}" data-type="net" data-toggle="modal" class="editable">
-                                                <i class="fa fa-desktop"></i> 192.168.5.{{ $i }}
+                                    <?php $user = \App\Http\Controllers\IPController::getName($type,$i) ?>
+                                    <tr class="search_item @if(session('success')=="$type$i") bg-yellow @endif">
+                                        <td><a href="#update_ip" data-ip="{{ $i }}" data-type="{{ $type }}" data-toggle="modal" class="editable">
+                                                <i class="fa fa-desktop"></i> 192.168.{{ $range }}.{{ $i }}
                                             </a>
                                         </td>
+                                        <td>{{ $user->mac }}</td>
                                         <td>{{ $user->owner }}</td>
                                         <td>{{ $user->section }}</td>
                                     </tr>
@@ -53,48 +55,6 @@
                             </table>
                         </div>
                         <!-- /.mail-box-messages -->
-                    </div>
-                    <!-- /.box-body -->
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="box box-success">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">IP Address <small class="text-danger">(192.168.10.* )</small></h3>
-                        <div class="box-tools pull-right">
-                            <div class="has-feedback">
-                                <input type="text" name="keyword" class="form-control input-sm" id="search2" placeholder="Search IP...">
-                                <span class="glyphicon glyphicon-search form-control-feedback"></span>
-                            </div>
-                        </div>
-                        <!-- /.box-tools -->
-                    </div>
-                    <!-- /.box-header -->
-                    <div class="box-body no-padding">
-                        <div class="table-responsive mailbox-messages" style="margin:5px 0px; border-top:1px solid #d6d6d6;border-bottom:1px solid #d6d6d6;">
-                            <table class="table table-bordered table-hover">
-                                <thead class="bg-gray-active">
-                                <tr>
-                                    <th>IP</th>
-                                    <th>Owner</th>
-                                    <th>Section/Area</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @for($i=4; $i<255; $i++)
-                                    <?php $user = \App\Http\Controllers\IPController::getName('homis',$i) ?>
-                                    <tr class="search_item2 @if(session('success')=="homis$i") bg-yellow @endif">
-                                        <td><a href="#update_ip" data-ip="{{ $i }}" data-type="homis" data-toggle="modal" class="editable">
-                                                <i class="fa fa-desktop"></i> 192.168.10.{{ $i }}
-                                            </a>
-                                        </td>
-                                        <td>{{ $user->owner }}</td>
-                                        <td>{{ $user->section }}</td>
-                                    </tr>
-                                @endfor
-                                </tbody>
-                            </table>
-                        </div>
                     </div>
                     <!-- /.box-body -->
                 </div>
@@ -118,6 +78,10 @@
                 <form method="post" id="formIP">
                     {{ csrf_field() }}
                     <div class="modal-body">
+                        <div class="form-group">
+                            <label for="section">Mac Address</label>
+                            <input type="text" id="mac" name="mac" class="form-control">
+                        </div>
                         <div class="form-group">
                             <label for="owner">Owner</label>
                             <input type="text" id="owner" name="owner" class="form-control">
@@ -150,11 +114,6 @@
         $('#search').on('keyup', function () {
             searchFunction();
         });
-
-        $('#search2').on('keyup', function () {
-            searchFunction2();
-        });
-
         function searchFunction() {
             // Declare variables
             var input, filter, td, tr, a, i;
@@ -174,24 +133,6 @@
 
         }
 
-        function searchFunction2() {
-            // Declare variables
-            var input, filter, td, tr, a, i;
-            input = document.getElementById('search2');
-            filter = input.value.toUpperCase();
-            td = document.getElementsByTagName('td');
-            tr = document.getElementsByClassName('search_item2');
-
-            for(i=0; i < tr.length; i++){
-                a = tr[i].innerHTML;
-                if(a.toUpperCase().indexOf(filter) > -1){
-                    tr[i].style.display = "";
-                }else{
-                    tr[i].style.display = "none";
-                }
-            }
-
-        }
 
     </script>
 @endsection

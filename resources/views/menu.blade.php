@@ -42,10 +42,17 @@
                     <i class="fa fa-fax"></i> <span>Job Request</span>
                 </a>
             </li>
-            <li class="{{ ($menu=='ip') ? 'active':'' }}">
-                <a href="{{ url('/ip') }}/">
+            <li class="treeview {{ ($menu=='ip') ? 'active menu-open':'' }}">
+                <a href="#">
                     <i class="fa fa-code-fork"></i> <span>IP Address</span>
+                    <span class="pull-right-container">
+                        <i class="fa fa-angle-left pull-right"></i>
+                    </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li class="@if(isset($sub) && $sub=='5.5') active @endif"><a href="{{ url('/ip/5') }}"><i class="fa fa-code-fork"></i> 192.168.5.*</a></li>
+                    <li class="@if(isset($sub) && $sub=='10.10') active @endif"><a href="{{ url('/ip/10') }}"><i class="fa fa-code-fork"></i> 192.168.10.*</a></li>
+                </ul>
             </li>
             <li class="{{ ($menu=='system') ? 'active':'' }}">
                 <a href="{{ url('/') }}/">
