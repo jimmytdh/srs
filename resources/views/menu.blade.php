@@ -40,6 +40,18 @@
             <li class="{{ ($menu=='job') ? 'active':'' }}">
                 <a href="{{ url('/job') }}/">
                     <i class="fa fa-fax"></i> <span>Job Request</span>
+                    <span class="pull-right-container">
+                      <span class="label label-success pull-right">0</span>
+                    </span>
+                </a>
+            </li>
+            <li class="{{ ($menu=='task') ? 'active':'' }}">
+                <a href="{{ url('/tasks') }}/">
+                    <i class="fa fa-file-text-o"></i> <span>Tasks</span>
+
+                    <span class="pull-right-container">
+                      <span class="label label-warning pull-right">0</span>
+                    </span>
                 </a>
             </li>
             <li class="treeview {{ ($menu=='ip') ? 'active menu-open':'' }}">

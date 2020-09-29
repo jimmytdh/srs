@@ -131,6 +131,11 @@ Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');
 //END JOB SECTION
 
+//START TASK SECTION
+
+Route::get('/tasks','TaskController@index');
+//END TASK SECTION
+
 //PARAM
 Route::get('/param/clear/{session}','ParamController@clearSession');
 Route::get('/loading','ParamController@loading');
