@@ -10,7 +10,7 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Due Date:</label>
-                        <input type="date" class="form-control" value="{{ date('Y-m-d') }}" name="due" required />
+                        <input type="date" class="form-control" value="{{ date('Y-m-d') }}" name="due_date" required />
                     </div>
                     <div class="form-group">
                         <input type="text" class="form-control" name="description" placeholder="Description" required />
@@ -22,13 +22,6 @@
                             <option>Ian Aaron Manugas</option>
                             <option>Jimmy Lomocso</option>
                             <option>Ariel Nocos</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <select name="status" id="" class="form-control" required>
-                            <option value="">Status...</option>
-                            <option selected>Pending</option>
-                            <option>Complete</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -45,14 +38,14 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal fade" tabindex="-1" role="dialog" id="updateServices" style="z-index:999991;">
+<div class="modal fade" tabindex="-1" role="dialog" id="update_task" style="z-index:999991;">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-header" style="padding: 5px 20px;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4><i class="fa fa-user"></i> IT Personnel</h4>
+                <h4><i class="fa fa-edit"></i> Update Task</h4>
             </div>
-            <div class="serviceSection">
+            <div class="task_section">
                 <div class="text-center" style="padding:20px">
                     <img src="{{ url('img/loading.gif') }}" /><br />
                     <small class="text-muted">Loading...Please wait...</small>

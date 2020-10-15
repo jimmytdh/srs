@@ -271,4 +271,9 @@ class JobController extends Controller
             'msg' => $req->service_by.' successfully completed the job!'
         ]);
     }
+
+    static function countPendingJob()
+    {
+        return Job::where('status','Pending')->count();
+    }
 }

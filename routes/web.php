@@ -134,6 +134,11 @@ Route::post('/job/services/{id}','JobController@updateServices');
 //START TASK SECTION
 
 Route::get('/tasks','TaskController@index');
+Route::post('/tasks/save','TaskController@store');
+Route::get('tasks/edit/{id}','TaskController@edit');
+Route::post('tasks/update/{id}','TaskController@update');
+Route::post('tasks/delete','TaskController@destroy');
+Route::post('tasks/search','TaskController@search');
 //END TASK SECTION
 
 //PARAM

@@ -1,13 +1,13 @@
 <?php
-$search = \Illuminate\Support\Facades\Session::get('searchJob');
+$search = \Illuminate\Support\Facades\Session::get('searchTask');
 if(!$search){
     $start = \Carbon\Carbon::today()->startOfMonth()->format('Y-m-d');
     $end = \Carbon\Carbon::today()->endOfMonth()->format('Y-m-d');
     $search = array(
         'keyword' => '',
         'date_range' => "$start-$end",
-        'service_by' => '',
-        'service_id' => ''
+        'assign_to' => '',
+        'status' => '',
     );
 }
 ?>
@@ -21,6 +21,7 @@ if(!$search){
         th {
             vertical-align: middle !important;
         }
+        .editable { border-bottom: 1px dashed #101010; }
     </style>
 @endsection
 
@@ -31,24 +32,31 @@ if(!$search){
             <div class="col-md-12">
                 <div class="box box-primary">
                     <div class="box-header with-border">
-                        <h3 class="box-title">List of Task <small class="text-danger">(Result: )</small></h3>
+                        <h3 class="box-title">List of Task <small class="text-danger">(Result: {{ $data->total() }})</small></h3>
                         <!-- /.box-tools -->
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body no-padding">
-                        <form action="{{ url('job/search') }}" class="form-inline" method="post">
+                        <form action="{{ url('tasks/search') }}" class="form-inline" method="post">
                             {{ csrf_field() }}
                             <div class="mailbox-controls">
                                 <div class="form-group">
                                     <input type="text" name="keyword" class="form-control input-sm" value="{{ $search['keyword'] }}" placeholder="Search Keyword...">
                                 </div>
                                 <div class="form-group">
-                                    <select name="service_by" class="form-control input-sm">
+                                    <select name="assign_to" class="form-control input-sm">
                                         <option value="">Assigned to...</option>
-                                        <option @if($search['service_by']=='Wairley Von Cabiluna') selected @endif>Wairley Von Cabiluna</option>
-                                        <option @if($search['service_by']=='Ian Aaron Manugas') selected @endif>Ian Aaron Manugas</option>
-                                        <option @if($search['service_by']=='Jimmy Lomocso') selected @endif>Jimmy Lomocso</option>
-                                        <option @if($search['service_by']=='Ariel Nocos') selected @endif>Ariel Nocos</option>
+                                        <option @if($search['assign_to']=='Wairley Von Cabiluna') selected @endif>Wairley Von Cabiluna</option>
+                                        <option @if($search['assign_to']=='Ian Aaron Manugas') selected @endif>Ian Aaron Manugas</option>
+                                        <option @if($search['assign_to']=='Jimmy Lomocso') selected @endif>Jimmy Lomocso</option>
+                                        <option @if($search['assign_to']=='Ariel Nocos') selected @endif>Ariel Nocos</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <select name="status" class="form-control input-sm">
+                                        <option value="">Select Status...</option>
+                                        <option @if($search['status']=='Pending') selected @endif>Pending</option>
+                                        <option @if($search['status']=='Complete') selected @endif>Complete</option>
                                     </select>
                                 </div>
 
@@ -73,7 +81,7 @@ if(!$search){
                             </div>
                         </form>
                         <div class="table-responsive mailbox-messages" style="margin:5px 0px; border-top:1px solid #d6d6d6;border-bottom:1px solid #d6d6d6;">
-                            <table class="table table-hover table-striped table-bordered">
+                            <table class="table table-bordered">
                                 <thead class="bg-green-gradient">
                                 <tr>
                                     <th>Task</th>
@@ -86,7 +94,18 @@ if(!$search){
                                 </thead>
                                 <tbody>
                                 @foreach($data as $row)
-
+                                    <tr class="@if($row->status=='Complete') bg-success @else bg-danger @endif">
+                                        <td class="text-success">
+                                            <a href="#update_task" class="editable" data-toggle="modal" data-id="{{ $row->id }}">
+                                                <i class="fa fa-edit"></i> {{ $row->description }}
+                                            </a>
+                                        </td>
+                                        <td>{{ date('m/d/y h:i a',strtotime($row->created_at)) }}</td>
+                                        <td>{{ date('m/d/y',strtotime($row->due_date)) }}</td>
+                                        <td>{{ $row->assign_to }}</td>
+                                        <td>{{ $row->status }}</td>
+                                        <td>{!! nl2br($row->remarks) !!}</td>
+                                    </tr>
                                 @endforeach
 
                                 @if(count($data)==0)
@@ -121,16 +140,16 @@ if(!$search){
             <div class="modal-content">
                 <div class="modal-header" style="padding: 5px 20px;">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4><i class="fa fa-times-circle"></i> Delete Item</h4>
+                    <h4><i class="fa fa-times-circle"></i> Delete Task</h4>
                 </div>
-                <form method="post" action="{{ url('/job/delete') }}">
+                <form method="post" action="{{ url('/tasks/delete') }}">
                     {{ csrf_field() }}
                     <div class="modal-body text-center">
                         <div class="form-group">
                             <input type="hidden" class="form-control" value="" name="id" id="inputDelete"  />
                         </div>
                         <div class="deleteMsg text-bold text-danger">
-                            Are you sure you want to delete this job request?
+                            Are you sure you want to delete this task?
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -158,13 +177,17 @@ if(!$search){
             });
 
 
-            $('a[href="#updateServices"]').click(function () {
+            $('a[href="#update_task"]').click(function () {
                 var id = $(this).data('id');
-                var url = "{{ url('job/services/') }}/"+id;
-                $('.serviceSection').load("{{ url('/loading') }}");
+                var url = "{{ url('tasks/edit/') }}/"+id;
+                $('.task_section').load("{{ url('/loading') }}");
                 setTimeout(function () {
-                    $('.serviceSection').load(url);
+                    $('.task_section').load(url);
                 },1000);
+            });
+
+            $('#update_task').on('hidden.bs.modal', function () {
+                $('.task_section').load("{{ url('/loading') }}");
             });
 
             $('a[href="#update"]').click(function () {
@@ -177,11 +200,12 @@ if(!$search){
             });
             $(document).on('click','a[href="#delete"]',function () {
                 var id = $(this).data('id');
-                var url = "{{ url('job/delete/') }}/"+id;
+                var url = "{{ url('tasks/delete/') }}/"+id;
                 console.log(url);
-                $('#update').modal('hide');
+                $('#update_task').modal('hide');
                 $('#inputDelete').val(id);
             });
         });
     </script>
+    @include('inc.lobibox')
 @endsection

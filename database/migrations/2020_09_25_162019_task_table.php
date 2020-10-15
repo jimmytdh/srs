@@ -15,7 +15,7 @@ class TaskTable extends Migration
     {
         Schema::create('tasks', function (Blueprint $table) {
             $table->increments('id');
-            $table->date('due');
+            $table->date('due_date');
             $table->string('description');
             $table->string('assign_to');
             $table->string('status');

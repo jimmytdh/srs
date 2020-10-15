@@ -41,7 +41,7 @@
                 <a href="{{ url('/job') }}/">
                     <i class="fa fa-fax"></i> <span>Job Request</span>
                     <span class="pull-right-container">
-                      <span class="label label-success pull-right">0</span>
+                      <span class="label label-success pull-right">{{ \App\Http\Controllers\JobController::countPendingJob() }}</span>
                     </span>
                 </a>
             </li>
@@ -50,7 +50,7 @@
                     <i class="fa fa-file-text-o"></i> <span>Tasks</span>
 
                     <span class="pull-right-container">
-                      <span class="label label-warning pull-right">0</span>
+                      <span class="label label-warning pull-right">{{ \App\Http\Controllers\TaskController::countPendingTask() }}</span>
                     </span>
                 </a>
             </li>
