@@ -39,7 +39,7 @@
         <img src="{{ asset('img/logo-white.png') }}" width="80px" />
     </div>
     <div class="title">
-        <font class="region">I.T. Service Requisition Form</font><br>
+        <font class="region">I.T. Job Request Form</font><br>
         <font class="sub">Cebu South Medical Center</font>
     </div>
     <!-- /.login-logo -->
