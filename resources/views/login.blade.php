@@ -67,11 +67,11 @@
                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
             </div>
             <div class="row">
-                <div class="col-xs-8">
-
+                <div class="col-xs-6">
+                    <a href="{{ url('/request') }}" class="btn btn-success btn-block btn-flat">Send Request</a>
                 </div>
                 <!-- /.col -->
-                <div class="col-xs-4">
+                <div class="col-xs-6">
                     <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
                 </div>
                 <!-- /.col -->

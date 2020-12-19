@@ -276,4 +276,13 @@ class JobController extends Controller
     {
         return Job::where('status','Pending')->count();
     }
+
+    static function getPendingJob()
+    {
+        $job = Job::where('status','Pending')
+                    ->orderBy('request_date','asc')
+                    ->limit(5)
+                    ->get();
+        return $job;
+    }
 }

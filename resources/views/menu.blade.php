@@ -73,7 +73,7 @@
             </li>
 
 
-            <li class="treeview">
+            <li class="treeview hidden">
                 <a href="#">
                     <i class="fa fa-bar-chart"></i> <span>Generate Report</span>
                     <span class="pull-right-container">
@@ -114,12 +114,12 @@
             @endif
             </div>
             <li class="header">ACCOUNT SETTINGS</li>
-            <li class="{{ ($menu=='profile') ? 'active':'' }}">
+            <li class="{{ ($menu=='profile') ? 'active':'' }} hidden">
                 <a href="{{ url('/user/profile') }}">
                     <i class="fa fa-user"></i> <span>Update Profile</span>
                 </a>
             </li>
-            <li class="{{ ($menu=='calendar') ? 'active':'' }}">
+            <li class="{{ ($menu=='calendar') ? 'active':'' }} hidden">
                 <a href="{{ url('/user/calendar') }}">
                     <i class="fa fa-calendar"></i> <span>My Calendar</span>
                 </a>

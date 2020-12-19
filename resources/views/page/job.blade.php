@@ -100,7 +100,7 @@
                                 @foreach($data as $row)
                                     <?php $info = \App\Http\Controllers\ItemController::borrowInfo($row->id);?>
                                     <tr>
-                                        <td class="text-bold">
+                                        <td class="text-bold" style="white-space: nowrap;">
                                             <a href="#update" data-toggle="modal" data-id="{{ $row->id }}">
                                                 @if($row->status=='Completed')
                                                     <i class="fa fa-circle text-success"></i>

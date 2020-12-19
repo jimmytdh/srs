@@ -85,7 +85,6 @@ if(!$search){
                                 <thead class="bg-green-gradient">
                                 <tr>
                                     <th>Task</th>
-                                    <th>Date Created</th>
                                     <th>Due Date</th>
                                     <th>Assigned to</th>
                                     <th>Status</th>
@@ -100,7 +99,6 @@ if(!$search){
                                                 <i class="fa fa-edit"></i> {{ $row->description }}
                                             </a>
                                         </td>
-                                        <td>{{ date('m/d/y h:i a',strtotime($row->created_at)) }}</td>
                                         <td>{{ date('m/d/y',strtotime($row->due_date)) }}</td>
                                         <td>{{ $row->assign_to }}</td>
                                         <td>{{ $row->status }}</td>

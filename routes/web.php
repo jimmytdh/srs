@@ -119,7 +119,13 @@ Route::get('/job/print','JobController@printReport');
 
 Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');
+
 //END JOB SECTION
+
+//START REQUEST
+Route::get('/request','RequestController@jobRequest');
+Route::post('/request','RequestController@jobRequest');
+//END REQUEST
 
 //START JOB SECTION
 

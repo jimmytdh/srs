@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Borrow;
 use App\Item;
+use App\Job;
+use App\Task;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -68,8 +70,8 @@ class HomeController extends Controller
             $tmp_day = Carbon::parse($date)->format('M d');
             $data[] = array(
                 'day' => $tmp_day,
-                'borrowed' =>  self::countBorrowed($date),
-                'returned' =>  self::countReturned($date)
+                'job' =>  self::countJob($date),
+                'task' =>  self::countTask($date)
             );
             $date = Carbon::parse($date)->addDay(1)->format('M d, Y');
         }
@@ -77,20 +79,20 @@ class HomeController extends Controller
         return $data;
     }
 
-    public function countBorrowed($date)
+    public function countJob($date)
     {
         $start = Carbon::parse($date)->startOfDay();
         $end = Carbon::parse($date)->endOfDay();
-        $count = Borrow::whereBetween('date_borrowed',[$start,$end]);
+        $count = Job::whereBetween('request_date',[$start,$end]);
 
         return $count->count();
     }
 
-    public function countReturned($date)
+    public function countTask($date)
     {
         $start = Carbon::parse($date)->startOfDay();
         $end = Carbon::parse($date)->endOfDay();
-        $count = Borrow::whereBetween('date_returned',[$start,$end]);
+        $count = Task::whereBetween('created_at',[$start,$end]);
 
         return $count->count();
     }

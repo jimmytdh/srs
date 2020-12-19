@@ -156,6 +156,7 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('/back') }}/js/demo.js"></script>
 @include('script.lobibox')
+@include('script.newRequest')
 @yield('js')
 </body>
 </html>
