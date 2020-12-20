@@ -19,7 +19,7 @@
         table { width: 100%; }
         table td {
             padding: 5px;
-            font-size: 0.8em;
+            font-size: 0.9em;
             vertical-align: top;
         }
         .table {
@@ -39,8 +39,8 @@
 </head>
 <body>
 <div class="wrapper">
-    <img src="{{ url('/img/doh.png') }}" width="70" alt="" class="pull-left" style="margin-left: 20px;">
-    <img src="{{ url('/img/logo.png') }}" width="70" alt="" class="pull-right" style="margin-right: 20px;">
+    <img src="{{ url('/img/doh.png') }}" width="100" alt="" class="pull-left" style="margin-left: 20px;">
+    <img src="{{ url('/img/logo-white.jpg') }}" width="110" alt="" class="pull-right" style="margin-right: 20px;">
     <div class="title">
         Republic of the Philippines<br />
         Department of Health<br />
