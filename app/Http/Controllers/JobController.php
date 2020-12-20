@@ -285,4 +285,18 @@ class JobController extends Controller
                     ->get();
         return $job;
     }
+
+    public function printJobReport($id)
+    {
+        $data = Job::find($id);
+        return view('report.job_form',compact('data'));
+    }
+
+    static function checkJobService($job_id, $service_id)
+    {
+        $check = JobService::where('job_id',$job_id)->where('service_id',$service_id)->first();
+        if($check)
+            return 'checked';
+        return null;
+    }
 }

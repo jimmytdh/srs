@@ -116,6 +116,7 @@ Route::get('/job/edit/{id}','JobController@edit');
 Route::post('/job/update/{id}','JobController@update');
 Route::post('/job/search','JobController@search');
 Route::get('/job/print','JobController@printReport');
+Route::get('/job/print/{id}','JobController@printJobReport');
 
 Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');
@@ -127,15 +128,13 @@ Route::get('/request','RequestController@jobRequest');
 Route::post('/request','RequestController@jobRequest');
 //END REQUEST
 
-//START JOB SECTION
+//START IP Section
 
 Route::get('/ip/{range}','IPController@index');
 Route::post('/ip/update/{type}/{id}','IPController@update');
 Route::post('/ip/search/{type}','IPController@search');
 
-Route::get('/job/services/{id}','JobController@editServices');
-Route::post('/job/services/{id}','JobController@updateServices');
-//END JOB SECTION
+//END IP Section
 
 //START TASK SECTION
 
