@@ -7,6 +7,8 @@ use App\JobService;
 use App\Services;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use FCMAPP;
 
 class RequestController extends Controller
 {
@@ -54,4 +56,14 @@ class RequestController extends Controller
         $count = Job::whereBetween('request_date',[$start,$end])->count();
         return $count++;
     }
+
+    function sendNotification(){
+        $data = array(
+            'title' => 'title',
+            'body' => 'body'
+        );
+        FcmController::sendTo('Sample','New body here',null,$data);
+        echo 'sent';
+    }
+
 }

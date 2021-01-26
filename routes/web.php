@@ -152,3 +152,6 @@ Route::get('/loading','ParamController@loading');
 
 Route::get('/manual/lastFriday','ParamController@lastFriday');
 Route::get('/manual/thirdWed','ParamController@thirdWed');
+
+
+Route::get('/send','FcmController@sendMessage');

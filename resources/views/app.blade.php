@@ -21,9 +21,7 @@
     <link rel="stylesheet" href="{{ url('/back') }}/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="{{ asset('/back/plugins/Lobibox/lobibox.css') }}">
     <link rel="stylesheet" href="{{ asset('/back/css/style.css') }}">
-
     <link rel="icon" type="image/png" href="{{ url('img/logo-white.png') }}">
-
 <!-- Google Font -->
     {{--<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">--}}
     <style>
@@ -31,6 +29,8 @@
             background: url('{{ url('/img/backdrop.png') }}'), -webkit-gradient(radial, center center, 0, center center, 460, from(#ccc), to(#ddd)) !important;
         }
     </style>
+
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
@@ -157,6 +157,7 @@
 <script src="{{ url('/back') }}/js/demo.js"></script>
 @include('script.lobibox')
 @include('script.newRequest')
+
 @yield('js')
 </body>
 </html>
