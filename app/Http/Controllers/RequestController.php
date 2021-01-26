@@ -28,11 +28,17 @@ class RequestController extends Controller
             $job = Job::create($data);
             $last_id = $job->id;
             $code = self::generateFormNo($date);
+            $form_no = $date->format('ym').'-'.str_pad($code,3,0,STR_PAD_LEFT);
             Job::find($last_id)
                 ->update([
-                    'form_no' =>  $date->format('ym').'-'.str_pad($code,3,0,STR_PAD_LEFT)
+                    'form_no' =>  $form_no
                 ]);
             $ids = $req->ids;
+            $notif = array(
+                'title' => "Job Request: $form_no",
+                'body' => "Requested by $req->request_by of $req->request_office"
+            );
+            FcmController::sendPushNotification($notif);
             if($ids)
             {
                 foreach($ids as $id)
