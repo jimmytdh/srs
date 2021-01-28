@@ -153,8 +153,8 @@
                         <td>Time: {{ ($data->acted_date) ? date('h:i A',strtotime($data->acted_date)) : null }}</td>
                     </tr>
                     <tr>
-                        <td width="50%">Date Completed: {{ ($data->date_completed) ? date('M d, Y',strtotime($data->completed_date)): '' }}</td>
-                        <td>Time: {{ ($data->date_completed) ? date('h:i A',strtotime($data->completed_date)): null }}</td>
+                        <td width="50%">Date Completed: {{ ($data->completed_date) ? date('M d, Y',strtotime($data->completed_date)): '' }}</td>
+                        <td>Time: {{ ($data->completed_date) ? date('h:i A',strtotime($data->completed_date)): null }}</td>
                     </tr>
                 </table>
 
