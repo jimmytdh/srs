@@ -64,7 +64,7 @@
     <img src="{{ Auth::user()->signature }}" class="sig3" width="250">
     @endif
     <img src="{{ url('/img/doh.png') }}" width="100" alt="" class="pull-left" style="margin-left: 20px;">
-    <img src="{{ url('/img/logo-white.jpg') }}" width="110" alt="" class="pull-right" style="margin-right: 20px;">
+    <img src="{{ url('/img/logo.png') }}" width="110" alt="" class="pull-right" style="margin-right: 20px;">
     <div class="title">
         Republic of the Philippines<br />
         Department of Health<br />
@@ -73,8 +73,8 @@
         <em>“A PHIC Accredited and ISO 9001:2015 Certified Healthcare Provider”</em>
         <br>
         <br>
-        <h2>I.T. Job Request Form</h2>
     </div>
+    <h2 style="text-align: center;margin-left: 110px;">I.T. Job Request Form</h2>
     <table>
         <tr>
             <td width="50%">
