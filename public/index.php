@@ -20,7 +20,7 @@ define('LARAVEL_START', microtime(true));
 | loading any of our classes later on. It feels great to relax.
 |
 */
-$dir = realpath('/xampp/tdh/dts/');
+$dir = realpath('/wamp64/server/srs/');
 
 require $dir.'/vendor/autoload.php';
 
