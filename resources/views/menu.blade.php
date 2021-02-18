@@ -73,23 +73,9 @@
             </li>
 
 
-            <li class="treeview hidden">
-                <a href="#">
-                    <i class="fa fa-bar-chart"></i> <span>Generate Report</span>
-                    <span class="pull-right-container">
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('/report/personal') }}"><i class="fa fa-user"></i> Personal Logs</a></li>
-                    <li><a href="{{ url('/report/section') }}"><i class="fa fa-users"></i> Section Logs</a></li>
-                    @if($user->level=='admin')
-                        <li><a href="{{ url('/admin/report/logs') }}"><i class="fa fa-print"></i> All Logs</a></li>
-                    @endif
-                </ul>
-            </li>
+
             <div class="hidden">
-            @if($user->level=='admin')
+            @if(Auth::user()->isAdmin())
                 <li class="header">SYSTEM PARAMETERS</li>
                 <li class="{{ ($menu=='users') ? 'active':'' }}">
                     <a href="{{ url('/admin/users') }}">
@@ -118,10 +104,19 @@
                 <a href="{{ url('/user/profile') }}">
                     <i class="fa fa-user"></i> <span>Update Profile</span>
                 </a>
+            </li><li class="{{ ($menu=='profile') ? 'active':'' }} hidden">
+                <a href="{{ url('/user/profile') }}">
+                    <i class="fa fa-user"></i> <span>Update Profile</span>
+                </a>
             </li>
             <li class="{{ ($menu=='calendar') ? 'active':'' }} hidden">
                 <a href="{{ url('/user/calendar') }}">
                     <i class="fa fa-calendar"></i> <span>My Calendar</span>
+                </a>
+            </li>
+            <li class="{{ request()->is('/user*') }}">
+                <a href="{{ url('/user/signature') }}" target="_blank">
+                    <i class="fa fa-pencil"></i> <span>My Signature</span>
                 </a>
             </li>
             <li>

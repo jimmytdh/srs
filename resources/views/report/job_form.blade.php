@@ -12,6 +12,7 @@
             width: 900px;
             min-height: 300px;
             padding: 20px 0px;
+            position: relative;
         }
         .title {
             text-align: center;
@@ -35,10 +36,33 @@
         .remarks, .findings, .others {
             min-height: 50px;
         }
+        .sig1 {
+            position: absolute;
+            top: 235px;
+            left: 160px;
+            width: 150px;
+        }
+        .sig2 {
+            position: absolute;
+            bottom: 55px;
+            right: 145px;
+            width: 150px;
+        }
+        .sig3 {
+            position: absolute;
+            bottom: 235px;
+            right: 145px;
+            width: 150px;
+        }
     </style>
 </head>
 <body>
 <div class="wrapper">
+    <img src="{{ $data->signature }}" class="sig1" width="250">
+    <img src="{{ $data->signature }}" class="sig2" width="250">
+    @if(Auth::user()->fname." ".Auth::user()->lname == $data->service_by)
+    <img src="{{ Auth::user()->signature }}" class="sig3" width="250">
+    @endif
     <img src="{{ url('/img/doh.png') }}" width="100" alt="" class="pull-left" style="margin-left: 20px;">
     <img src="{{ url('/img/logo-white.jpg') }}" width="110" alt="" class="pull-right" style="margin-right: 20px;">
     <div class="title">

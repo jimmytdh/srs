@@ -55,6 +55,10 @@
             <div class="alert alert-danger text-danger">
                 <i class="fa fa-warning"></i> Login failed! Your account is {{ $status }}.
             </div>
+        @elseif($status=='denied')
+            <div class="alert alert-danger text-danger">
+                <i class="fa fa-warning"></i> Access Denied!
+            </div>
         @endif
         <form action="{{ url('login') }}" method="post">
             {{ csrf_field() }}

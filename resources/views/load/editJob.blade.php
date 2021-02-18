@@ -39,6 +39,9 @@
         <a href="{{ url("/job/print/".$id) }}" class="btn btn-info btn-sm" target="_blank">
             <i class="fa fa-print"></i> Print Form
         </a>
+        <a href="{{ url('/job/signature/'.$id) }}" class="btn btn-warning btn-sm" target="_blank">
+            <i class="fa fa-pencil"></i> Signature
+        </a>
         <a href="#delete" class="btn btn-danger btn-sm" data-toggle="modal" data-id="{{ $id }}">
             <i class="fa fa-trash"></i> Delete
         </a>

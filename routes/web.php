@@ -11,12 +11,16 @@
 |
 */
 
+Route::get('/test',function (){
+    return view('signature');
+});
 Route::get('/','HomeController@index');
 
 Route::get('/login','MainController@login');
 Route::post('/login','MainController@validateLogin');
 Route::get('logout',function(){
     \Illuminate\Support\Facades\Session::flush();
+    \Illuminate\Support\Facades\Auth::logout();
     return redirect('/login');
 });
 //Manage Charts and Calendar
@@ -29,6 +33,8 @@ Route::get('/pdf/track','PrintController@printTrack');
 
 //Manage Profile
 Route::get('/user/profile','UserController@profile');
+Route::get('/user/signature','UserController@signature');
+Route::post('/user/signature','UserController@saveSignature');
 Route::post('/user/change/password','UserController@password');
 
 //Events and my calendar
@@ -117,6 +123,8 @@ Route::post('/job/update/{id}','JobController@update');
 Route::post('/job/search','JobController@search');
 Route::get('/job/print','JobController@printReport');
 Route::get('/job/print/{id}','JobController@printJobReport');
+Route::get('/job/signature/{id}','JobController@signature');
+Route::post('/job/signature/{id}','JobController@saveSignature');
 
 Route::get('/job/services/{id}','JobController@editServices');
 Route::post('/job/services/{id}','JobController@updateServices');

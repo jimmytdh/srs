@@ -1,10 +1,11 @@
-<?php $user = \Illuminate\Support\Facades\Session::get('user'); ?>
+<?php $user = Auth::user(); ?>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>{{ (isset($title)) ? $title: 'Service Request' }}</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -87,17 +88,17 @@
                     </li>
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <img src="{{ url('upload/thumbs/'.$user->picture) }}" class="user-image" alt="User Image">
+                            <img src="{{ ($user->picture) ? $user->picture : url('/img/logo.png') }}" class="user-image" alt="User Image">
                             <span class="hidden-xs">{{ $user->fname }} {{ $user->lname }}</span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
-                                <img src="{{ url('upload/thumbs/'.$user->picture) }}" class="img-circle" alt="User Image">
+                                <img src="{{ ($user->picture) ? $user->picture : url('/img/logo.png') }}" class="img-circle" alt="User Image">
 
                                 <p>
                                     {{ $user->fname }} {{ $user->lname }}
-                                    <small>{{ \App\Section::find($user->section)->code }}</small>
+                                    <small>{{ \App\Section::find($user->section)->description }}</small>
                                     <small>{{ \App\Designation::find($user->designation)->description }}</small><br />
                                 </p>
                             </li>
@@ -123,9 +124,9 @@
 <!-- /.content-wrapper -->
     <footer class="main-footer">
         <div class="pull-right hidden-xs">
-            <b>Version</b> 1.0
+            <b>Version</b> 1.1
         </div>
-        <strong><a href="#">TDH SRS</a>.</strong> All rights
+        <strong><a href="#">TDH SRS 2020</a>.</strong> All rights
         reserved.
     </footer>
 
@@ -155,6 +156,13 @@
 
 <!-- AdminLTE for demo purposes -->
 <script src="{{ url('/back') }}/js/demo.js"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+</script>
 @include('script.lobibox')
 @include('script.newRequest')
 

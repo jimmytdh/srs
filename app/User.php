@@ -7,21 +7,31 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    protected $table = 'user';
+    protected $connection = 'users';
     protected $fillable = [
         'fname',
         'lname',
-        'designation',
-        'contact',
-        'email',
-        'sex',
-        'dob',
-        'section',
-        'address',
         'username',
+        'designation',
+        'division',
+        'section',
         'password',
-        'level',
-        'status',
+        'signature',
         'picture'
     ];
+
+    public function roles()
+    {
+        return $this->hasMany('App\UserAccess');
+    }
+
+    public function isAdmin()
+    {
+        return $this->roles()->where('level','admin')->exists();
+    }
+
+    public function allowed()
+    {
+        return $this->roles()->exists();
+    }
 }

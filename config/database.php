@@ -53,6 +53,21 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+
+        'users' => [
+            'driver' => 'mysql',
+            'host' => env('USER_HOST', '127.0.0.1'),
+            'port' => env('USER_PORT', '3306'),
+            'database' => env('USER_DATABASE', 'forge'),
+            'username' => env('USER_USERNAME', 'forge'),
+            'password' => env('USER_PASSWORD', ''),
+            'unix_socket' => env('USER_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
         'calendar' => [
             'driver' => 'mysql',
             'host' => env('EVENT_HOST', '127.0.0.1'),

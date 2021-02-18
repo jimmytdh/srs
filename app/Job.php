@@ -17,6 +17,7 @@ class Job extends Model
         'service_by',
         'acted_date',
         'completed_date',
-        'status'
+        'status',
+        'signature'
     ];
 }

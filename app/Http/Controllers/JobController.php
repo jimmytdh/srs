@@ -299,4 +299,18 @@ class JobController extends Controller
             return 'checked';
         return null;
     }
+
+    public function signature($id)
+    {
+        $job = Job::find($id);
+        return view('page.signature',compact('job'));
+    }
+
+    public function saveSignature(Request $request, $id)
+    {
+        Job::find($id)
+            ->update([
+                'signature' => $request->signature
+            ]);
+    }
 }

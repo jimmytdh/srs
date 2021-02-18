@@ -69,7 +69,7 @@
 </div><!-- /.modal -->
 
 <div class="modal fade" tabindex="-1" role="dialog" id="update" style="z-index:999991;">
-    <div class="modal-dialog modal-sm" role="document">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header" style="padding: 5px 20px;">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -6,6 +6,7 @@ use App\Activity;
 use App\chat;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -55,5 +56,19 @@ class UserController extends Controller
             'title' => 'Page not found!',
             'menu' => 'profile'
         ]);
+    }
+
+    public function signature()
+    {
+        return view('page.signature');
+    }
+
+    public function saveSignature(Request $request)
+    {
+        $id = Auth::id();
+        User::find($id)
+            ->update([
+                'signature' => $request->signature
+            ]);
     }
 }
