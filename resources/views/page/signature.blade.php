@@ -76,7 +76,7 @@
                 'UndoButton':true,
                 'background-color': 'transparent',
                 'decor-color': 'transparent',
-                lineWidth: 5,
+                lineWidth: 3,
 
             });
 
