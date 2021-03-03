@@ -38,7 +38,7 @@ class RequestController extends Controller
                 'title' => "Job Request: $form_no",
                 'body' => "Requested by $req->request_by of $req->request_office"
             );
-            FcmController::sendPushNotification($notif);
+            //FcmController::sendPushNotification($notif);
             if($ids)
             {
                 foreach($ids as $id)
